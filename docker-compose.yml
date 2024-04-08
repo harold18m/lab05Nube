@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   nodejs:
     build:
@@ -16,34 +15,28 @@ services:
       - MONGO_PORT=$MONGO_PORT
       - MONGO_DB=$MONGO_DB
     ports:
-      - "11610:11600"
+      - '11610:11600'
     volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
+      - '.:/home/node/app'
+      - 'node_modules:/home/node/app/node_modules'
     networks:
       - apphm-network
-    command: ./wait-for.sh db:27017 -- /home/node/app/node_modules/.bin/nodemon app.js
-
-
+    command: './wait-for.sh db:27017 -- /home/node/app/node_modules/.bin/nodemon app.js'
   db:
-    image: mongo:latest
+    image: 'mongo:latest'
     container_name: db
     restart: unless-stopped
     env_file: .env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
       - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
-    volumes:     
-      - mongodb-data:/data/db
+    volumes:
+      - 'mongodb-data:/data/db'
     networks:
-      - apphm-network  
-
-
+      - apphm-network
 networks:
-  app-network:
+  apphm-network:
     driver: bridge
-
-
 volumes:
-  dbdata:
+  mongodb-data: 
   node_modules: 
